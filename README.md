@@ -2,12 +2,35 @@
 
 LLDGen is a Python tool that automates the generation of Low-Level Design (LLD) documents for code repositories. It leverages LLMs (such as Gemini or OpenAI models) to analyze code, generate detailed HTML LLDs, and ensure all diagrams (especially Mermaid diagrams) are valid and renderable.
 
+## Project Structure
+
+```
+lldgen/
+│
+├── chunker.py
+├── cleanup.sh
+├── cli.py
+├── config_doc.py
+├── config.py
+├── file_parser.py
+├── lld_generator.py
+├── llm_interface.py
+├── merger.py
+├── prompts.py
+├── repo_handler.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── output/         # Output directory (gitignored)
+├── repository/     # Cloned repo directory (gitignored)
+└── ...
+```
+
 ## Features
 - **Automated LLD Generation:** Parses source code and generates detailed, well-structured HTML LLDs.
 - **Chunked Processing:** Processes large codebases in configurable chunks for scalability.
 - **Parallel Execution:** Utilizes multi-threading for efficient LLD generation and merging.
 - **Recursive Merging:** Merges LLDs recursively until a single, comprehensive document remains.
-- **Mermaid Diagram Fixes:** Automatically fixes and validates all Mermaid diagrams in the final LLD using LLMs.
 - **Configurable:** All key parameters (API keys, chunk size, model, etc.) are set in `config.py`.
 
 ## Requirements
@@ -18,7 +41,23 @@ LLDGen is a Python tool that automates the generation of Low-Level Design (LLD) 
   - `gitpython`
   - `pyyaml`
 
-Install dependencies with:
+## Setup (Recommended: Virtual Environment)
+
+Create and activate a virtual environment named `autolld`:
+
+**On Windows:**
+```sh
+python -m venv autolld
+.\autolld\Scripts\activate
+```
+
+**On macOS/Linux:**
+```sh
+python3 -m venv autolld
+source autolld/bin/activate
+```
+
+Then install dependencies:
 ```sh
 pip install -r requirements.txt
 ```
@@ -51,8 +90,7 @@ python cli.py https://github.com/example/repo.git --output ./my_lld_output
 1. **Clone & Parse:** Clones the repo and parses all project files.
 2. **Chunk & Generate:** Splits files into chunks and generates LLDs for each chunk using the LLM.
 3. **Recursive Merge:** Merges LLDs recursively until one remains.
-4. **Fix Mermaid Diagrams:** Calls the LLM to fix and validate all Mermaid diagrams in the final HTML.
-5. **Document Config:** Documents configuration properties found in the codebase.
+4. **Document Config:** Documents configuration properties found in the codebase.
 
 ## Notes
 - Ensure your API key is set in your environment as specified in `config.py`.

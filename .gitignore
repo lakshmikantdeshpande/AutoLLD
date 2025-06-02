@@ -62,6 +62,7 @@ venv/
 
 # Output
 output/
+repository/
 
 # Logs
 *.log
