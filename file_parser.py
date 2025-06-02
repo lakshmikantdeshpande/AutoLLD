@@ -7,6 +7,9 @@ def parse_project_files(base_path):
     extensions = {".java", ".md", ".properties", ".yml", ".yaml"}
     files = []
     for root, _, filenames in os.walk(base_path):
+        # Skip any directory that is a test package
+        if "test" in Path(root).parts:
+            continue
         for file in filenames:
             if Path(file).suffix in extensions:
                 files.append(os.path.join(root, file))
