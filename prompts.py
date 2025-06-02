@@ -27,15 +27,3 @@ LLD_MERGE_PROMPT = (
     "Double-check that the output HTML is well-formed, with no syntax errors, no stray code blocks at the top, and no diagram rendering issues. Double check that diagrams are rendered correctly. "
     "If any block would be empty, omit it.\n\n"
 )
-
-FIX_MERMAID_PROMPT = (
-    "You are a senior software architect and HTML/diagram expert. "
-    "Carefully review the following HTML document and fix ALL Mermaid diagrams so they are valid, renderable, and follow best practices. "
-    "- Replace all literal < and > inside Mermaid diagrams with &lt; and &gt;. "
-    "- Remove all indentation inside <div class=\"mermaid\"> blocks (diagram lines must start at the leftmost position). "
-    "- Ensure every arrow line in a sequence diagram has a message. "
-    "- If any diagram is broken, malformed, or not rendering, rewrite it so it is valid and renders correctly. "
-    "- Do not change any non-Mermaid content. "
-    "- Include the <script> tag and HTML for mermaid.js if missing. "
-    "Return the full, fixed HTML document."
-)

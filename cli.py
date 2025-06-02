@@ -8,7 +8,7 @@ from chunker import chunk_files
 from lld_generator import generate_llds
 from merger import merge_llds, merged_llds_to_html, merge_llds_logically, merge_llds_parallel
 from config_doc import document_properties
-from prompts import LLD_GEN_PROMPT, LLD_MERGE_PROMPT, FIX_MERMAID_PROMPT
+from prompts import LLD_GEN_PROMPT, LLD_MERGE_PROMPT
 from config import CHUNK_SIZE
 import sys
 
@@ -105,17 +105,6 @@ def main():
     output_component_path = os.path.join(output_dir, "component-lld.html")
     shutil.copyfile(final_html_path, output_component_path)
     print(f"[cli.py] 📄 Copied final LLD to: {output_component_path}\n", file=sys.stderr)
-
-    # Fix all Mermaid diagrams in the final LLD HTML
-    print(f"[cli.py] 🛠️ Fixing all Mermaid diagrams in the final LLD...\n", file=sys.stderr)
-    from llm_interface import ask_llm
-    with open(output_component_path, encoding="utf-8") as f:
-        html_content = f.read()
-    fixed_html = ask_llm(FIX_MERMAID_PROMPT + "\n\n" + html_content)
-    fixed_html_text = getattr(fixed_html, 'content', fixed_html)
-    with open(output_component_path, "w", encoding="utf-8") as f:
-        f.write(fixed_html_text)
-    print(f"[cli.py] 🖼️ Mermaid diagrams fixed in: {output_component_path}\n", file=sys.stderr)
 
     print(f"[cli.py] 📝 Documenting config properties...\n", file=sys.stderr)
     document_properties(parsed_files, output_dir)
